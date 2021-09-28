@@ -1,4 +1,4 @@
-export default (message, args) => {
+module.exports = (message, args) => {
     result = { x: 0, y: 0 }
 
     args.splice(1).forEach((vector) => {

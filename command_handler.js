@@ -1,11 +1,19 @@
-import random from './commands/random.js'
-import empty from './commands/empty.js'
-import nonsense from './commands/nonsense.js'
-import pi from './commands/pi.js'
-import vectorsum from './commands/vectorsum.js'
+let commands = {}
 
-const commands = { random, empty, nonsense, pi, vectorsum }
+require('fs')
+    .readdirSync('commands')
+    .forEach(function (file) {
+        commands[file.slice(0, -3)] = require(`./commands/${file}`)
+    })
 
-export default (args, message) => {
-    commands[args[0]](message, args)
+module.exports = (message) => {
+    if (message.content.startsWith('!')) {
+        let args = message.content.slice(1).split(' ')
+
+        try {
+            commands[args[0]](message, args)
+        } catch (err) {
+            message.channel.send(`**\`Error:\`**\`\n${err}\``)
+        }
+    }
 }

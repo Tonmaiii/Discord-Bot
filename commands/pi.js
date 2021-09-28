@@ -1,7 +1,6 @@
-import readFileSync from 'fs'
+const pi = require('fs').readFileSync('assets/pi.txt', 'utf8')
 
-export default (message, args) => {
-    const pi = readFileSync('assets/pi.txt', 'utf8')
+module.exports = (message, args) => {
     if (parseInt(args[1])) {
         message.channel.send(pi.slice(0, parseInt(args[1])))
     } else {
