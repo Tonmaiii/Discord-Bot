@@ -11,4 +11,5 @@ client.on('ready', () => console.log('Bot is online'))
 
 client.on('messageCreate', handle_command)
 
-client.login('ODI3ODQzNTkwMzg1MzAzNTUy.YGg7bA.gyue8Ap-Ycx51UmiG3h4hmkao7I')
+require('dotenv').config()
+client.login(process.env.BOTTOKEN)
