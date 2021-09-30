@@ -1,15 +1,16 @@
 console.clear()
+console.log('\n'.repeat(10))
 
-const { Client, Intents } = require('discord.js')
-const handle_command = require('./command_handler.js')
+const Discord = require('discord.js')
+const handle_message = require('./message_handler.js')
 
-const intents = new Intents(32767)
+const intents = new Discord.Intents(32767)
 
-const client = new Client({ intents })
+const client = new Discord.Client({ intents })
 
 client.on('ready', () => console.log('Bot is online'))
 
-client.on('messageCreate', handle_command)
+client.on('messageCreate', handle_message)
 
 require('dotenv').config()
 client.login(process.env.BOT_TOKEN)
