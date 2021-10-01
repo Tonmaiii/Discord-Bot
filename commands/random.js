@@ -1,4 +1,4 @@
-module.exports = (message, args) => {
+module.exports = (message) => {
     let characters =
         'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890.,/\\;\'":<>?!@#$%^&*()_+'
 

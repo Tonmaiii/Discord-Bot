@@ -1,6 +1,8 @@
 const Discord = require('discord.js')
 
-module.exports = (message, args) => {
+module.exports = (message, args, client) => {
+    console.log(args[1])
+
     message.author.id === process.env.DEBUG_USER_ID &&
         message.channel.send({
             content: 'content',
