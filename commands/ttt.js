@@ -25,6 +25,7 @@ module.exports = (message, args) => {
                             },
                             {
                                 name: 'VS',
+                                value: '­',
                                 inline: true
                             },
                             {

@@ -24,7 +24,10 @@ class GameMessage {
             components[((pos - 1) / 3) | 0].components[(pos - 1) % 3],
             {
                 label: '◯',
-                style: 'PRIMARY',
+                style:
+                    process.env.OWNER_USER_ID === this.p1
+                        ? 'SUCCESS'
+                        : 'PRIMARY',
                 disabled: true
             }
         )
@@ -48,7 +51,10 @@ class GameMessage {
             components[((pos - 1) / 3) | 0].components[(pos - 1) % 3],
             {
                 label: '╳',
-                style: 'DANGER',
+                style:
+                    process.env.OWNER_USER_ID === this.p2
+                        ? 'SUCCESS'
+                        : 'DANGER',
                 disabled: true
             }
         )

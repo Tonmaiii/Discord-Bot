@@ -20,7 +20,10 @@ module.exports = (interaction, id) => {
             if (winner === 1) {
                 Object.assign(embeds[1], {
                     title: 'Winner',
-                    color: 'BLUE',
+                    color:
+                        process.env.OWNER_USER_ID === game.p1
+                            ? 'DARK_GREEN'
+                            : 'BLUE',
                     fields: [
                         {
                             name: '◯',
@@ -32,7 +35,10 @@ module.exports = (interaction, id) => {
             } else if (winner === 2) {
                 Object.assign(embeds[1], {
                     title: 'Winner',
-                    color: 'RED',
+                    color:
+                        process.env.OWNER_USER_ID === game.p2
+                            ? 'DARK_GREEN'
+                            : 'RED',
                     fields: [
                         {
                             name: '╳',
