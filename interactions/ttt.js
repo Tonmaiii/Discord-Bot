@@ -5,7 +5,7 @@ module.exports = (interaction, id) => {
         let game = games[interaction.message.id]
         let pos = parseInt(id[1])
 
-        if (interaction.user.id === game.p1) {
+        if (interaction.user.id === game.p1 && game.turn === 1) {
             game.p1_interaction(interaction, pos)
             game.turn = 2
         } else if (interaction.user.id === game.p2 && game.turn === 2) {
