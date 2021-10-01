@@ -9,7 +9,7 @@ require('fs')
 module.exports = interaction => {
     let interaction_id = interaction.customId.split('.')
     if (interactions[interaction_id[0]]) {
-        interactions[interaction_id[0]](interaction, interaction_id).then()
+        interactions[interaction_id[0]](interaction, interaction_id)
     }
 
     interaction.deferUpdate()
