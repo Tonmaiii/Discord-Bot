@@ -15,9 +15,7 @@ module.exports = (message, client) => {
             .filter(str => str)
         if (commands[args[0]]) {
             commands[args[0]](message, args, client)
-            console.log(
-                `issued command ${commands[args[0]]} with arguments ${args}`
-            )
+            console.log(`issued command ${args[0]} with arguments ${args}`)
         }
     }
 }
