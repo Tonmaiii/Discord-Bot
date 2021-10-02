@@ -118,6 +118,9 @@ class Game {
                 return player
             }
         }
-        return 0
+
+        let draw = -1
+        this.board.forEach(row => row.includes(0) && (draw = 0))
+        return draw
     }
 }

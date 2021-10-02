@@ -17,7 +17,13 @@ module.exports = (interaction, id) => {
         if (winner) {
             let embeds = interaction.message.embeds
 
-            if (winner === 1) {
+            if (winner === -1) {
+                Object.assign(embeds[1], {
+                    title: 'Draw',
+                    color: 'PURPLE',
+                    fields: []
+                })
+            } else if (winner === 1) {
                 Object.assign(embeds[1], {
                     title: 'Winner',
                     color:
