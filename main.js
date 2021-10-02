@@ -1,5 +1,6 @@
 console.clear()
 console.log('\n'.repeat(10))
+require('dotenv').config()
 
 const Discord = require('discord.js')
 const handle_message = require('./message_handler.js')
@@ -16,5 +17,4 @@ client.on('messageCreate', message => {
 })
 client.on('interactionCreate', handle_interaction)
 
-require('dotenv').config()
 client.login(process.env.BOT_TOKEN)
