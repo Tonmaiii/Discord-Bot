@@ -9,14 +9,10 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "@tensorflow-models/mobilenet": "^2.1.0",
-        "@tensorflow/tfjs": "^3.9.0",
-        "@tensorflow/tfjs-node": "^3.9.0",
         "discord.js": "^13.2.0",
         "dotenv": "^10.0.0",
         "node-fetch": "^2.6.5",
-        "nodemon": "^2.0.13",
-        "upgrade": "^1.1.0"
+        "nodemon": "^2.0.13"
     },
     "engines": {
         "node": "16.10.0"
