@@ -8,10 +8,10 @@ module.exports = (message, args) => {
     })
 
     let magnitude = Math.sqrt(result.x ** 2 + result.y ** 2)
-    let direction = 1 / Math.cos(result.x / magnitude)
+    let direction = Math.acos(result.x / magnitude)
     message.channel.send(
         `x: ${result.x}\ny: ${result.y}\n\nmag: ${magnitude}\ndir: ${
-            (direction / (2 * Math.PI)) * 360
+            (direction * 180) / Math.PI
         }`
     )
 }
