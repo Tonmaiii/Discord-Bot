@@ -1,4 +1,4 @@
-const { games } = require('../src/tictactoe.js')
+const { games } = require('../misc/tictactoe.js')
 
 module.exports = (interaction, id) => {
     if (games[interaction.message.id]) {

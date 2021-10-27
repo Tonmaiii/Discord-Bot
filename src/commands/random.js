@@ -1,4 +1,4 @@
-module.exports = message => {
+const handler = interaction => {
     let characters =
         'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890.,/\\;\'":<>?!@#$%^&*()_+'
 
@@ -7,5 +7,12 @@ module.exports = message => {
         result += characters[(Math.random() * characters.length) | 0]
     }
 
-    message.channel.send(result)
+    interaction.reply(result)
 }
+
+const info = {
+    name: 'random',
+    description: 'Sends random things'
+}
+
+module.exports = { handler, info }

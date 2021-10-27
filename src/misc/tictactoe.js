@@ -1,8 +1,7 @@
 let games = {}
 
-function make_new_game(message, p1, p2) {
-    games[message.id] = new GameMessage(p1, p2)
-}
+const make_new_game = (reply, p1, p2) =>
+    (games[reply.id] = new GameMessage(p1, p2))
 
 module.exports = { games, make_new_game }
 
