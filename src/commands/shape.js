@@ -27,10 +27,7 @@ const handler = async interaction => {
     try {
         const { label } = await response.json()
 
-        interaction.editReply({
-            content: `I see some ${label}!`,
-            ephemeral: false
-        })
+        interaction.channel.send(`I see some ${label}!`)
     } catch {
         interaction.editReply({
             content: `Bot error`,
