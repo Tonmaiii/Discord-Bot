@@ -1,5 +1,9 @@
-const fetch = require('node-fetch')
 const { awaitUntilMessage } = require('../handlers/message_await')
+const TeachableMachine = require('@sashido/teachablemachine-node')
+
+const model = new TeachableMachine({
+    modelUrl: 'https://teachablemachine.withgoogle.com/models/rcBmdkGbn/'
+})
 
 const getImageFromMessage = message => {
     const attachment = message.attachments.first()
@@ -18,22 +22,11 @@ const handler = async interaction => {
 
     const url = await awaitUntilMessage(getImageFromMessage)
 
-    response = await fetch(`${process.env.TENSORFLOW_API_URL}shape`, {
-        method: 'POST',
-        body: JSON.stringify({ url }),
-        headers: { 'Content-Type': 'application/json' }
+    const predictions = await model.classify({
+        imageUrl: url
     })
 
-    try {
-        const { label } = await response.json()
-
-        interaction.channel.send(`I see some ${label}!`)
-    } catch {
-        interaction.editReply({
-            content: `Bot error`,
-            ephemeral: true
-        })
-    }
+    interaction.channel.send(`I see some ${predictions[0].class}!`)
 }
 
 const info = {
