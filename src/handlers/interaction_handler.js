@@ -11,13 +11,17 @@ readdirSync('./src/interactions').forEach(function (file) {
 })
 
 module.exports = interaction => {
-    if (interaction.isCommand()) {
-        commands[interaction.commandName]?.handler(interaction)
-    } else {
-        const interaction_id = interaction.customId.split('.')
-        interactions[interaction_id[0]] &&
-            interactions[interaction_id[0]](interaction, interaction_id)
+    try {
+        if (interaction.isCommand()) {
+            commands[interaction.commandName]?.handler(interaction)
+        } else {
+            const interaction_id = interaction.customId.split('.')
+            interactions[interaction_id[0]] &&
+                interactions[interaction_id[0]](interaction, interaction_id)
 
-        interaction.deferUpdate()
+            interaction.deferUpdate()
+        }
+    } catch (err) {
+        console.error(err)
     }
 }
