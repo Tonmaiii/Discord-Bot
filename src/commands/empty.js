@@ -1,6 +1,6 @@
 const handler = interaction => {
     const lines = interaction.options.get('lines')?.value
-    interaction.reply('­\n'.repeat(0 < lines <= 1000 ? lines : 10))
+    interaction.reply('­\n'.repeat(0 < lines && lines <= 1000 ? lines : 10))
 }
 
 const info = {
