@@ -1,4 +1,4 @@
-const handler = interaction => interaction.reply('glub\nblun\nnorin')
+const handler = interaction => interaction.reply('glub\nblun\nnorin\nwreaid')
 const info = {
     name: 'nonsense',
     description: 'Does nonsense things'
