@@ -1,9 +1,11 @@
-const { GuildChannel } = require('discord.js')
+const create_commands = require('./create_commands')
 const { receiveMessage } = require('./message_await')
 
 module.exports = (message, client) => {
-    message.guild &&
-        message.channel.permissionsFor(message.guild.me).has('SEND_MESSAGES')
+    if (message.content === 'force add commands') {
+        create_commands(client, message.guild.id)
+        message.channel.send('Added commands').catch(console.error)
+    }
 
     receiveMessage(message)
 }

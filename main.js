@@ -17,7 +17,7 @@ const client = new Discord.Client({ intents })
 
 client.on('ready', () => {
     console.log('Bot is online')
-    create_commands(client)
+    create_commands(client, process.env.GUILD_ID)
 })
 
 client.on('messageCreate', message => handle_message(message, client))

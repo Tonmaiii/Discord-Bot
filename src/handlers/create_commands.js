@@ -1,7 +1,7 @@
 const fs = require('fs')
 
-module.exports = client => {
-    const guild = client.guilds.cache.get(process.env.GUILD_ID) // undefined in real bot
+module.exports = (client, guildId) => {
+    const guild = client.guilds.cache.get(guildId) // undefined in real bot
 
     let commands
     if (guild) {
