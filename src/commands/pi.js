@@ -1,4 +1,4 @@
-const pi = require('fs').readFileSync('assets/pi.txt', 'utf8')
+const pi = require('../../assets/pi.json')
 
 const handler = interaction => {
     const digits = interaction.options.get('digits')?.value
