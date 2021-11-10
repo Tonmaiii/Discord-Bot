@@ -14,6 +14,4 @@ module.exports = client => {
         const { info } = require(`../commands/${file}`)
         commands.create(info)
     })
-
-    return commands
 }
