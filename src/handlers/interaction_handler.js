@@ -12,6 +12,20 @@ readdirSync('./src/interactions').forEach(function (file) {
 
 module.exports = interaction => {
     if (interaction.isCommand()) {
+        const hasPermission =
+            interaction.guild &&
+            interaction.channel
+                .permissionsFor(interaction.guild.me)
+                .has('VIEW_CHANNEL')
+
+        if (!hasPermission) {
+            interaction.reply({
+                content: "I don't have permission",
+                ephemeral: true
+            })
+            return
+        }
+
         commands[interaction.commandName]?.handler(interaction)
     } else {
         const interaction_id = interaction.customId.split('.')

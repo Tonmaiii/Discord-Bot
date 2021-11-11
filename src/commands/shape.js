@@ -29,8 +29,8 @@ const handler = async interaction => {
         imageUrl: url
     })
 
-    interaction.channel
-        .send(`I see some ${predictions[0].class}!`)
+    interaction
+        .followUp(`I see some ${predictions[0].class}!`)
         .catch(console.error)
 }
 
