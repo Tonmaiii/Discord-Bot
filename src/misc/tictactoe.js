@@ -1,4 +1,4 @@
-let games = {}
+const games = {}
 
 const make_new_game = (reply, p1, p2) =>
     (games[reply.id] = new GameMessage(p1, p2))
@@ -16,8 +16,8 @@ class GameMessage {
     p1_interaction(interaction, pos) {
         this.game.p1play(pos)
 
-        let components = interaction.message.components
-        let embeds = interaction.message.embeds
+        const components = interaction.message.components
+        const embeds = interaction.message.embeds
 
         Object.assign(
             components[((pos - 1) / 3) | 0].components[(pos - 1) % 3],
@@ -43,8 +43,8 @@ class GameMessage {
     p2_interaction(interaction, pos) {
         this.game.p2play(pos)
 
-        let components = interaction.message.components
-        let embeds = interaction.message.embeds
+        const components = interaction.message.components
+        const embeds = interaction.message.embeds
 
         Object.assign(
             components[((pos - 1) / 3) | 0].components[(pos - 1) % 3],
@@ -118,8 +118,7 @@ class Game {
             }
         }
 
-        let draw = -1
-        this.board.forEach(row => row.includes(0) && (draw = 0))
-        return draw
+        const draw = this.board.every(row => !row.includes(0))
+        if (draw) return -1
     }
 }

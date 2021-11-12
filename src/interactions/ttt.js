@@ -2,8 +2,8 @@ const { games } = require('../misc/tictactoe.js')
 
 module.exports = (interaction, id) => {
     if (games[interaction.message.id]) {
-        let game = games[interaction.message.id]
-        let pos = parseInt(id[1])
+        const game = games[interaction.message.id]
+        const pos = parseInt(id[1])
 
         if (interaction.user.id === game.p1 && game.turn === 1) {
             game.p1_interaction(interaction, pos)
@@ -15,7 +15,7 @@ module.exports = (interaction, id) => {
 
         winner = game.game.check_win()
         if (winner) {
-            let embeds = interaction.message.embeds
+            const embeds = interaction.message.embeds
 
             if (winner === -1) {
                 Object.assign(embeds[1], {
@@ -55,7 +55,7 @@ module.exports = (interaction, id) => {
                 })
             }
 
-            let components = interaction.message.components.map(row => {
+            const components = interaction.message.components.map(row => {
                 row.components.map(button => {
                     button.disabled = true
                     return button
