@@ -1,7 +1,7 @@
 const handler = interaction => {
     const text = interaction.options.get('text').value
     const reversed = text.split('').reverse().join('')
-    interaction.reply(reversed)
+    interaction.reply(reversed).catch(console.error)
 }
 
 const info = {
