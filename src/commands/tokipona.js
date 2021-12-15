@@ -5,7 +5,17 @@ const handler = interaction => {
     const words = text.split(' ')
     const translated = words
         .map(word =>
-            translation[word] === '' ? '' : translation[word] || `**${word}**`
+            word
+                .match(/^(\W+)?(.+?)(\W+)?$/)
+                .slice(1)
+                .map((word, i) =>
+                    i === 1
+                        ? translation[word] === undefined
+                            ? `**${word}**`
+                            : translation[word]
+                        : word
+                )
+                .join('')
         )
         .filter(word => word)
         .join(' ')
