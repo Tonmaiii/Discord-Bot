@@ -2,9 +2,9 @@
     "name": "discord-bot",
     "version": "1.0.0",
     "description": "",
-    "main": "main.js",
+    "main": "dist/main.js",
     "scripts": {
-        "dev": "nodemon main.js"
+        "dev": "nodemon dist/main.js"
     },
     "author": "",
     "license": "ISC",
