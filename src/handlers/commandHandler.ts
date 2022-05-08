@@ -3,7 +3,6 @@ import { readdirSync } from 'fs'
 
 let commands = {}
 
-console.log(process.cwd())
 readdirSync('./dist/commands').forEach(async file => {
     commands[file.replace(/\..+$/, '')] = await import(`../commands/${file}`)
 })
