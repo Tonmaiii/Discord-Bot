@@ -2,8 +2,6 @@ import { ButtonInteraction, Message, MessageActionRow } from 'discord.js'
 import { games } from '../misc/tictactoe.js'
 
 export default (interaction: ButtonInteraction, id: string) => {
-    console.log(interaction.user.id)
-    console.log(games[interaction.message.id])
     if (games[interaction.message.id]) {
         const game = games[interaction.message.id]
         const pos = parseInt(id[1])

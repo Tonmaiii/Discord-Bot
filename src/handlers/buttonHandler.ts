@@ -12,8 +12,6 @@ readdirSync('./dist/buttons').forEach(async file => {
 export default (interaction: ButtonInteraction) => {
     try {
         const interactionId = interaction.customId.split('.')
-        console.log(interactionId)
-        console.log(interactions)
         interactions[interactionId[0]]?.(interaction, interactionId)
         interaction.deferUpdate()
     } catch (e) {
