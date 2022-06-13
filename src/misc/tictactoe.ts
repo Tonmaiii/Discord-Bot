@@ -2,14 +2,14 @@ import { ButtonInteraction, Message, MessageActionRow } from 'discord.js'
 
 export const games = {}
 
-export const makeNewGame = (reply: Message, p1: number, p2: number) =>
+export const makeNewGame = (reply: Message, p1: string, p2: string) =>
     (games[reply.id] = new GameMessage(p1, p2))
 
 class GameMessage {
     game: Game
     turn: number
 
-    constructor(private p1: number, private p2: number) {
+    constructor(private p1: string, private p2: string) {
         this.game = new Game(p1, p2)
         this.turn = 1
     }
@@ -73,7 +73,7 @@ class GameMessage {
 
 class Game {
     board: number[][]
-    constructor(private p1: number, private p2: number) {
+    constructor(private p1: string, private p2: string) {
         this.board = [
             [0, 0, 0],
             [0, 0, 0],

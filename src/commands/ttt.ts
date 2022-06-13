@@ -2,6 +2,7 @@ import {
     BaseMessageComponentOptions,
     CommandInteraction,
     Message,
+    MessageActionRow,
     MessageActionRowOptions,
     MessageButton
 } from 'discord.js'
@@ -49,27 +50,27 @@ const createEmbed = (p1: string, p2: string) => [
 ]
 
 const createComponent = (): MessageActionRowOptions[] => [
-    {
+    new MessageActionRow({
         components: [
             createButton(' ', 'ttt.1'),
             createButton(' ', 'ttt.2'),
             createButton(' ', 'ttt.3')
         ]
-    },
-    {
+    }),
+    new MessageActionRow({
         components: [
             createButton(' ', 'ttt.4'),
             createButton(' ', 'ttt.5'),
             createButton(' ', 'ttt.6')
         ]
-    },
-    {
+    }),
+    new MessageActionRow({
         components: [
             createButton(' ', 'ttt.7'),
             createButton(' ', 'ttt.8'),
             createButton(' ', 'ttt.9')
         ]
-    }
+    })
 ]
 
 const handler = async (interaction: CommandInteraction) => {
@@ -108,7 +109,7 @@ const handler = async (interaction: CommandInteraction) => {
         })
         .catch(console.error)
     if (!reply) return
-    makeNewGame(reply as Message, parseInt(player), parseInt(opponent))
+    makeNewGame(reply as Message, player, opponent)
 }
 
 const info = {
