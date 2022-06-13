@@ -1,7 +1,7 @@
 import { CommandInteraction } from 'discord.js'
 
 const handler = (interaction: CommandInteraction) => {
-    interaction.reply('glub\nblun\nnorin\nwreaid').catch(console.error)
+    interaction.reply('glub\nblun\nnorin\nwreaid\nquniop').catch(console.error)
 }
 
 const info = {
