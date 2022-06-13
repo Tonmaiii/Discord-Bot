@@ -6,10 +6,18 @@ export default (interaction: ButtonInteraction, id: string) => {
         const game = games[interaction.message.id]
         const pos = parseInt(id[1])
 
-        if (interaction.user.id === game.p1 && game.turn === 1) {
+        if (
+            interaction.user.id === game.p1 &&
+            game.turn === 1 &&
+            game.get_pos(pos) === 0
+        ) {
             game.p1_interaction(interaction, pos)
             game.turn = 2
-        } else if (interaction.user.id === game.p2 && game.turn === 2) {
+        } else if (
+            interaction.user.id === game.p2 &&
+            game.turn === 2 &&
+            game.get_pos(pos) === 0
+        ) {
             game.p2_interaction(interaction, pos)
             game.turn = 1
         }
