@@ -1,4 +1,4 @@
-import { ButtonInteraction, Message } from 'discord.js'
+import { ButtonInteraction, Message, MessageEmbed } from 'discord.js'
 
 export const games: { [key: string]: GameMessage } = {}
 const actionMap = {
@@ -31,10 +31,8 @@ class GameMessage {
                 message.embeds[0].fields[1].name = actionMap[this.p2action]
             }
 
-            const winner = this.getWinner()
-            if (winner === 1) message.embeds[0].fields[0].name += ' 🎉🎉🎉'
-            if (winner === 2) message.embeds[0].fields[1].name += ' 🎉🎉🎉'
             message.edit({ embeds: message.embeds })
+            this.displayWinner(message)
         } else if (interaction.user.id === this.p2 && this.p2action === null) {
             this.p2action = action
             const message = interaction.message as Message
@@ -45,10 +43,8 @@ class GameMessage {
                 message.embeds[0].fields[1].name = actionMap[this.p2action]
             }
 
-            const winner = this.getWinner()
-            if (winner === 1) message.embeds[0].fields[0].name += ' 🎉🎉🎉'
-            if (winner === 2) message.embeds[0].fields[1].name += ' 🎉🎉🎉'
             message.edit({ embeds: message.embeds })
+            this.displayWinner(message)
         }
     }
 
@@ -80,5 +76,46 @@ class GameMessage {
                 return 1
             }
         }
+    }
+
+    displayWinner(message: Message) {
+        const winner = this.getWinner()
+        if (winner === null) return
+        message.embeds[1] = new MessageEmbed()
+
+        if (winner === 0) {
+            Object.assign(message.embeds[1], {
+                title: `${actionMap[this.p1action]} = ${
+                    actionMap[this.p2action]
+                }\nDraw`
+            })
+        } else if (winner === 1) {
+            Object.assign(message.embeds[1], {
+                title: `${actionMap[this.p1action]} > ${
+                    actionMap[this.p2action]
+                }`,
+                fields: [
+                    {
+                        name: 'Winner',
+                        value: `<@!${this.p1}>`,
+                        inline: true
+                    }
+                ]
+            })
+        } else if (winner === 2) {
+            Object.assign(message.embeds[1], {
+                title: `${actionMap[this.p1action]} < ${
+                    actionMap[this.p2action]
+                }`,
+                fields: [
+                    {
+                        name: 'Winner',
+                        value: `<@!${this.p2}>`,
+                        inline: true
+                    }
+                ]
+            })
+        }
+        message.edit({ embeds: message.embeds })
     }
 }

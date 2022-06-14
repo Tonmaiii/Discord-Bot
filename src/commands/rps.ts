@@ -59,15 +59,15 @@ const handler = async (interaction: CommandInteraction) => {
         return
     }
 
-    if (opponent === player) {
-        interaction
-            .reply({
-                content: 'You cannot play with yourself',
-                ephemeral: true
-            })
-            .catch(console.error)
-        return
-    }
+    // if (opponent === player) {
+    //     interaction
+    //         .reply({
+    //             content: 'You cannot play with yourself',
+    //             ephemeral: true
+    //         })
+    //         .catch(console.error)
+    //     return
+    // }
 
     const reply = (await interaction
         .reply({
