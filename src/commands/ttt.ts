@@ -21,7 +21,7 @@ const createEmbed = (p1: string, p2: string) => [
         title: 'Playing Tic-Tac-Toe',
         fields: [
             {
-                name: '◯',
+                name: '⭕',
                 value: `<@!${p1}>`,
                 inline: true
             },
@@ -31,7 +31,7 @@ const createEmbed = (p1: string, p2: string) => [
                 inline: true
             },
             {
-                name: '╳',
+                name: '❌',
                 value: `<@!${p2}>`,
                 inline: true
             }
@@ -41,7 +41,7 @@ const createEmbed = (p1: string, p2: string) => [
         title: 'Current turn',
         fields: [
             {
-                name: '◯',
+                name: '⭕',
                 value: `<@!${p1}>`,
                 inline: true
             }
