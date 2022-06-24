@@ -22,7 +22,7 @@ const createEmbed = (p1: string, p2: string) => [
         fields: [
             {
                 name: '⭕',
-                value: `<@!${p1}>`,
+                value: `<@${p1}>`,
                 inline: true
             },
             {
@@ -32,7 +32,7 @@ const createEmbed = (p1: string, p2: string) => [
             },
             {
                 name: '❌',
-                value: `<@!${p2}>`,
+                value: `<@${p2}>`,
                 inline: true
             }
         ]
@@ -42,7 +42,7 @@ const createEmbed = (p1: string, p2: string) => [
         fields: [
             {
                 name: '⭕',
-                value: `<@!${p1}>`,
+                value: `<@${p1}>`,
                 inline: true
             }
         ]
