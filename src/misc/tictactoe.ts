@@ -35,7 +35,7 @@ class GameMessage {
 
         Object.assign(embeds[1].fields[0], {
             name: '❌',
-            value: `<@!${this.p2}>`,
+            value: `<@${this.p2}>`,
             inline: true
         })
 
@@ -63,7 +63,7 @@ class GameMessage {
 
         Object.assign(embeds[1].fields[0], {
             name: '⭕',
-            value: `<@!${this.p1}>`,
+            value: `<@${this.p1}>`,
             inline: true
         })
 
