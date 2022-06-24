@@ -97,7 +97,7 @@ class GameMessage {
                 fields: [
                     {
                         name: 'Winner',
-                        value: `<@!${this.p1}>`,
+                        value: `<@${this.p1}>`,
                         inline: true
                     }
                 ]
@@ -110,7 +110,7 @@ class GameMessage {
                 fields: [
                     {
                         name: 'Winner',
-                        value: `<@!${this.p2}>`,
+                        value: `<@${this.p2}>`,
                         inline: true
                     }
                 ]

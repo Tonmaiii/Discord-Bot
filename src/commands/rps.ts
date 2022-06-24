@@ -21,12 +21,12 @@ const createEmbed = (p1: string, p2: string) => [
         fields: [
             {
                 name: '\xad',
-                value: `<@!${p1}>`,
+                value: `<@${p1}>`,
                 inline: true
             },
             {
                 name: '\xad',
-                value: `<@!${p2}>`,
+                value: `<@${p2}>`,
                 inline: true
             }
         ]
