@@ -18,8 +18,8 @@ class GameMessage {
         this.game.p1play(pos)
         const message = interaction.message as Message
 
-        const components = interaction.message.components as MessageActionRow[]
-        const embeds = interaction.message.embeds
+        const components = message.components as MessageActionRow[]
+        const embeds = message.embeds
 
         Object.assign(
             components[((pos - 1) / 3) | 0].components[(pos - 1) % 3],
@@ -39,15 +39,15 @@ class GameMessage {
             inline: true
         })
 
-        message.edit({ components, embeds })
+        message.edit({ components, embeds }).catch(console.error)
     }
 
     p2_interaction(interaction: ButtonInteraction, pos: number) {
         this.game.p2play(pos)
         const message = interaction.message as Message
 
-        const components = interaction.message.components as MessageActionRow[]
-        const embeds = interaction.message.embeds
+        const components = message.components as MessageActionRow[]
+        const embeds = message.embeds
 
         Object.assign(
             components[((pos - 1) / 3) | 0].components[(pos - 1) % 3],
@@ -67,7 +67,7 @@ class GameMessage {
             inline: true
         })
 
-        message.edit({ components, embeds })
+        message.edit({ components, embeds }).catch(console.error)
     }
 }
 

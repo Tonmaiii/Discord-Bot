@@ -74,7 +74,9 @@ export default (interaction: ButtonInteraction, id: string) => {
                 return row
             })
 
-            ;(interaction.message as Message).edit({ embeds, components })
+            ;(interaction.message as Message)
+                ?.edit({ embeds, components })
+                .catch(console.error)
         }
     }
 }

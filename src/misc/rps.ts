@@ -43,7 +43,7 @@ class GameMessage {
                 message.embeds[0].fields[1].name = actionMap[this.p2action]
             }
 
-            message.edit({ embeds: message.embeds })
+            message.edit({ embeds: message.embeds }).catch(console.error)
             this.displayWinner(message)
         }
     }
