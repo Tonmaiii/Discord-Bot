@@ -42,7 +42,7 @@ export default (interaction: ButtonInteraction, id: string) => {
                     fields: [
                         {
                             name: '⭕',
-                            value: `<@!${game.p1}>`,
+                            value: `<@${game.p1}>`,
                             inline: true
                         }
                     ]
@@ -57,7 +57,7 @@ export default (interaction: ButtonInteraction, id: string) => {
                     fields: [
                         {
                             name: '❌',
-                            value: `<@!${game.p2}>`,
+                            value: `<@${game.p2}>`,
                             inline: true
                         }
                     ]
