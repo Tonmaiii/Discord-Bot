@@ -1,7 +1,7 @@
 import { CommandInteraction } from 'discord.js'
 
 const handler = (interaction: CommandInteraction) => {
-    interaction.reply('glub\nblun\nnorin\nwreaid\nquniop\ntutrtles\ndoes being stress is good or bad\nfacorisaton\nhisself\nis homeschool illegal no legal').catch(console.error)
+    interaction.reply('glub\nblun\nnorin\nwreaid\nquniop\ntutrtles\ndoes being stress is good or bad\nfacorisaton\nhisself\nis homeschool illegal no legal\nthe first astronomy that went to space').catch(console.error)
 }
 
 const info = {
