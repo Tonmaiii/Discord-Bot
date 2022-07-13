@@ -1,7 +1,10 @@
 import { CommandInteraction } from 'discord.js'
+import { readFileSync } from 'fs'
+
+const nonsense = readFileSync('./src/data/nonsense.txt', 'utf-8')
 
 const handler = (interaction: CommandInteraction) => {
-    interaction.reply('glub\nblun\nnorin\nwreaid\nquniop\ntutrtles\ndoes being stress is good or bad\nfacorisaton\nhisself\nis homeschool illegal no legal\nthe first astronomy that went to space\nit might occur environment').catch(console.error)
+    interaction.reply(nonsense).catch(console.error)
 }
 
 const info = {
