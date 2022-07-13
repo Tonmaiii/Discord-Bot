@@ -1,8 +1,8 @@
 import {
     CommandInteraction,
     MessageButton,
-    MessageActionRow,
-    Message
+    MessageActionRowOptions,
+    BaseMessageComponentOptions
 } from 'discord.js'
 import { twoPlayerGame } from '../misc/createNewGame'
 
@@ -34,14 +34,16 @@ const createEmbed = (p1: string, p2: string) => [
     }
 ]
 
-const createComponent = (): MessageActionRow[] => [
-    new MessageActionRow({
+const createComponent = (): (Required<BaseMessageComponentOptions> &
+    MessageActionRowOptions)[] => [
+    {
+        type: 'ACTION_ROW',
         components: [
             createButton('✊', 'rps.rock'),
             createButton('✋', 'rps.paper'),
             createButton('✌️', 'rps.scissors')
         ]
-    })
+    }
 ]
 
 const handler = async (interaction: CommandInteraction) => {
