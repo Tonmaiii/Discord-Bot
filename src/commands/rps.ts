@@ -4,6 +4,7 @@ import {
     MessageActionRow,
     Message
 } from 'discord.js'
+import { twoPlayerGame } from '../misc/createNewGame'
 
 import { createNewGame } from '../misc/rps'
 
@@ -48,38 +49,14 @@ const handler = async (interaction: CommandInteraction) => {
     const mention = interaction.options.get('opponent')
     const opponent = mention.value as string
 
-    if (mention.role) {
-        // Is not person
-        interaction
-            .reply({
-                content: `${mention.role.name} is not a person`,
-                ephemeral: true
-            })
-            .catch(console.error)
-        return
-    }
-
-    if (opponent === player) {
-        interaction
-            .reply({
-                content: 'You cannot play with yourself',
-                ephemeral: true
-            })
-            .catch(console.error)
-        return
-    }
-
-    const reply = (await interaction
-        .reply({
+    twoPlayerGame(
+        interaction,
+        {
             embeds: createEmbed(player, opponent),
-            components: createComponent(),
-            fetchReply: true
-        })
-        .catch(console.error)) as Message
-
-    createNewGame(reply, player, opponent)
-
-    if (!reply) return
+            components: createComponent()
+        },
+        createNewGame
+    )
 }
 
 const info = {

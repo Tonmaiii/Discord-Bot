@@ -1,49 +1,14 @@
-import {
-    CommandInteraction,
-    MessageButton,
-    MessageActionRow,
-    Message,
-    MessageEmbed
-} from 'discord.js'
+import { CommandInteraction } from 'discord.js'
 
 import ConnectFour from '../misc/connectFourGameMessage'
+import { twoPlayerGame } from '../misc/createNewGame'
 
 const handler = async (interaction: CommandInteraction) => {
-    const player = interaction.user.id
-    const mention = interaction.options.get('opponent')
-    const opponent = mention.value as string
-
-    if (mention.role) {
-        // Is not person
-        interaction
-            .reply({
-                content: `${mention.role.name} is not a person`,
-                ephemeral: true
-            })
-            .catch(console.error)
-        return
-    }
-
-    if (opponent === player) {
-        interaction
-            .reply({
-                content: 'You cannot play with yourself',
-                ephemeral: true
-            })
-            .catch(console.error)
-        return
-    }
-
-    const reply = (await interaction
-        .reply({
-            embeds: [{ title: 'Connect Four' }],
-            fetchReply: true
-        })
-        .catch(console.error)) as Message
-
-    ConnectFour.newGame(reply, player, opponent)
-
-    if (!reply) return
+    twoPlayerGame(
+        interaction,
+        { embeds: [{ title: 'Connect Four' }] },
+        ConnectFour.newGame
+    )
 }
 
 const info = {
