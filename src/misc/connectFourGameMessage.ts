@@ -32,7 +32,7 @@ export default class GameMessage extends Game {
 
         collector.on('collect', (reaction, user) => {
             if (user === this.message.client.user) return
-            reaction.users.remove(user)
+            reaction.users.remove(user).catch(console.error)
 
             const player = this.getPlayer(user.id)
             if (player !== this.turn) return
