@@ -46,13 +46,15 @@ export default class Game {
     checkWin(player: 1 | 2): boolean {
         for (let col = 0; col < Game.COLUMNS; col++) {
             for (let row = 0; row < Game.ROWS; row++) {
-                return Game.WIN_LINES.some(line => {
-                    return line
-                        .map(([x, y]) => [x + col, y + row])
-                        .every(([x, y]) => this.board[x]?.[y] === player)
+                const win = Game.WIN_LINES.some(line => {
+                    return line.every(
+                        ([x, y]) => this.board[x + col]?.[y + row] === player
+                    )
                 })
+                if (win) return true
             }
         }
+        return false
     }
 
     private findEmptyRow(column: number) {
