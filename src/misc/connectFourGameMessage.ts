@@ -41,8 +41,6 @@ export default class GameMessage extends Game {
             if (!this.columnIsValid(column)) return
             this.drop(column, player)
             this.editMessage()
-            console.log(this.board)
-            console.log(this.checkWin(this.turn))
             if (this.checkWin(this.turn)) {
                 this.finish(this.turn)
                 collector.stop()
