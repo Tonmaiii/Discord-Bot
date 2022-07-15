@@ -22,16 +22,18 @@ export default class GameMessage extends Game {
     }
 
     private editMessage() {
-        this.message.edit({
-            embeds: [
-                {
-                    title: 'Wordle',
-                    description: `${
-                        this.guesses.length
-                    }/6\n\n${this.generateResults()}\n\nGuess a five letter word`
-                }
-            ]
-        })
+        this.message
+            .edit({
+                embeds: [
+                    {
+                        title: 'Wordle',
+                        description: `${
+                            this.guesses.length
+                        }/6\n\n${this.generateResults()}\n\nGuess a five letter word`
+                    }
+                ]
+            })
+            .catch(console.error)
     }
 
     private setUpInteraction() {
