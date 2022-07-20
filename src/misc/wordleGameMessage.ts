@@ -11,14 +11,22 @@ const wordToEmoji = (word: string) => {
 export default class GameMessage extends Game {
     private static games: { [key: string]: GameMessage } = {}
 
-    private constructor(private message: Message, private player: string) {
-        super()
+    private constructor(
+        private message: Message,
+        private player: string,
+        letters: number
+    ) {
+        super(letters)
         this.editMessage()
         this.setUpInteraction()
     }
 
-    static newGame(message: Message, player: string) {
-        GameMessage.games[message.id] = new GameMessage(message, player)
+    static newGame(message: Message, player: string, letters: number) {
+        GameMessage.games[message.id] = new GameMessage(
+            message,
+            player,
+            letters
+        )
     }
 
     private editMessage() {
@@ -29,7 +37,9 @@ export default class GameMessage extends Game {
                         title: 'Wordle',
                         description: `${
                             this.guesses.length
-                        }/6\n\n${this.generateResults()}\n\nGuess a five letter word`
+                        }/6\n\n${this.generateResults()}\n\nGuess a ${
+                            this.letters
+                        } letter word`
                     }
                 ]
             })
@@ -39,12 +49,15 @@ export default class GameMessage extends Game {
     private setUpInteraction() {
         const callback = async (message: Message) => {
             if (message.author.id !== this.player) return
-            if (!Game.validGuess(message.content)) return
+            if (!this.validGuess(message.content)) return
             this.guess(message.content)
             this.editMessage()
             if (message.content.toUpperCase() === this.word) {
                 this.generateWinMessage()
                 message.client.removeListener('messageCreate', callback)
+                message.reply(
+                    `${this.word} guessed correctly in ${this.guesses.length}/6 guesses`
+                )
                 return
             }
             if (this.guesses.length >= 6) {

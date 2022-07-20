@@ -4,9 +4,11 @@ export default class Game {
     protected word: string
     guesses: { guess: string; result: (0 | 1 | 2)[] }[] = []
 
-    constructor() {
+    constructor(protected letters: number) {
         this.word =
-            words[Math.floor(Math.random() * words.length)].toUpperCase()
+            words[letters - 1][
+                Math.floor(Math.random() * words[letters - 1].length)
+            ]
     }
 
     guess(guess: string) {
@@ -62,7 +64,11 @@ export default class Game {
         return result
     }
 
-    static validGuess(guess: string): boolean {
-        return words.includes(guess.toLowerCase())
+    validGuess(guess: string): boolean {
+        return words[this.letters - 1].includes(guess.toUpperCase())
+    }
+
+    static validLength(length: number): boolean {
+        return Boolean(words[length - 1])
     }
 }
