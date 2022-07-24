@@ -1,6 +1,6 @@
 import { CommandInteraction } from 'discord.js'
 
-import ConnectFour from '../misc/connectFourGameMessage'
+import ConnectFour from '../games/connectFour/gameMessage'
 import { twoPlayerGame } from '../misc/createNewGame'
 
 const handler = async (interaction: CommandInteraction) => {

@@ -1,5 +1,5 @@
 import { ButtonInteraction } from 'discord.js'
-import { games } from '../misc/rps'
+import { games } from '../games/rps'
 
 export default (interaction: ButtonInteraction, id: string[]) => {
     const game = games[interaction.message.id]

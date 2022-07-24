@@ -1,5 +1,5 @@
 import { Message } from 'discord.js'
-import Game from './wordleGame'
+import Game from './game'
 
 const wordToEmoji = (word: string) => {
     return word

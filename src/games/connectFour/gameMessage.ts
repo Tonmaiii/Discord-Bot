@@ -1,5 +1,5 @@
 import { Message, MessageEmbedOptions, MessageReaction } from 'discord.js'
-import Game from './connectFourGame'
+import Game from './game'
 
 export default class GameMessage extends Game {
     private static games: { [key: string]: GameMessage } = {}

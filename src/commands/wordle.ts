@@ -1,5 +1,5 @@
 import { CommandInteraction, Message } from 'discord.js'
-import Wordle from '../misc/wordleGameMessage'
+import Wordle from '../games/wordle/GameMessage'
 
 const handler = async (interaction: CommandInteraction) => {
     const letters = (interaction.options.get('letters')?.value as number) || 5

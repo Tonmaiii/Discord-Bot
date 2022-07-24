@@ -7,7 +7,7 @@ import {
     MessageButton
 } from 'discord.js'
 import { twoPlayerGame } from '../misc/createNewGame'
-import { makeNewGame } from '../misc/tictactoe'
+import { makeNewGame } from '../games/tictactoe'
 
 const createButton = (label: string, id: string) => {
     return new MessageButton({

@@ -1,5 +1,5 @@
 import { ButtonInteraction, Message, MessageActionRow } from 'discord.js'
-import { games } from '../misc/tictactoe.js'
+import { games } from '../games/tictactoe.js'
 
 export default (interaction: ButtonInteraction, id: string) => {
     if (games[interaction.message.id]) {
