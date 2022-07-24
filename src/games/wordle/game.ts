@@ -1,4 +1,4 @@
-import * as words from '../../data/wordle.json'
+import * as words from '../../data/words.json'
 
 export default class Game {
     protected word: string
