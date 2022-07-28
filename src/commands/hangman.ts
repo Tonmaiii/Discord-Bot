@@ -1,5 +1,5 @@
 import { CommandInteraction, Message } from 'discord.js'
-import Hangman from '../games/hangman/GameMessage'
+import Hangman from '../games/hangman/gameMessage'
 
 const handler = async (interaction: CommandInteraction) => {
     const reply = (await interaction
