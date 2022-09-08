@@ -24,7 +24,6 @@ export default class GameMessage extends Game {
         emojis.forEach((_, i) =>
             this.message.react(`${i + 1}\u20E3`).catch(console.error)
         )
-
         const collector = this.message.createReactionCollector({
             filter: (reaction: MessageReaction) =>
                 emojis.includes(reaction.emoji.name)
