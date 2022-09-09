@@ -56,7 +56,7 @@ const handler = async (interaction: CommandInteraction) => {
             components: createComponent(choices),
             fetchReply: true
         })
-        .catch(console.error)) as Message
+        .catch(() => interaction.reply('reply').catch(console.error)) as Message
 
     const collector = message.createMessageComponentCollector({
         filter: (interaction: ButtonInteraction) =>
