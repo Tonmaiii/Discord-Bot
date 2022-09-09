@@ -145,7 +145,7 @@ const selectLanguages = () => {
     const selected = []
     const unselected = languages
     for (let i = 0; i < 4; i++) {
-        console.log(selected)
+        console.log(unselected)
         const index = Math.floor(Math.random() * unselected.length)
         selected.push(unselected[index])
         unselected.splice(index, 1)
