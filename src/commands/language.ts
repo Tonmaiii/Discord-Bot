@@ -47,7 +47,7 @@ const handler = async (interaction: CommandInteraction) => {
         await fetch(
             `https://${correct.wiki}.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=1&explaintext=1&generator=random&grnnamespace=0`
         )
-    ).json()
+    ).json().catch(() => console.log('bad things happened'))
     const article: string = Object.values(data.query.pages)[0]['extract']
 
     const message: Message = (await interaction
