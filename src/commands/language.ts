@@ -49,6 +49,7 @@ const handler = async (interaction: CommandInteraction) => {
         )
     ).json()
     const article: string = Object.values(data.query.pages)[0]['extract']
+    }
     catch {
         interaction.reply('something went wrong').catch(console.error))
     }
