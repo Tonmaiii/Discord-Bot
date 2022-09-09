@@ -49,9 +49,8 @@ const handler = async (interaction: CommandInteraction) => {
         await fetch(
             `https://${correct.wiki}.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=1&explaintext=1&generator=random&grnnamespace=0`
         )
-    ).json().catch(() => interaction.reply('json').catch(console.error))
+    ).json()
     const article: string = Object.values(data.query.pages)[0]['extract']
-    console.log(article)
 
     const message: Message = (await interaction
         .reply({
@@ -146,6 +145,7 @@ const selectLanguages = () => {
     const selected = []
     const unselected = languages
     for (let i = 0; i < 4; i++) {
+        console.log(selected)
         const index = Math.floor(Math.random() * unselected.length)
         selected.push(unselected[index])
         unselected.splice(index, 1)
