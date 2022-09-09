@@ -51,7 +51,7 @@ const handler = async (interaction: CommandInteraction) => {
     const article: string = Object.values(data.query.pages)[0]['extract']
     }
     catch {
-        interaction.reply('something went wrong').catch(console.error))
+        interaction.reply('something went wrong').catch(console.error)
     }
 
     const message: Message = (await interaction
