@@ -41,6 +41,8 @@ const handler = async (interaction: CommandInteraction) => {
     const userId = interaction.user.id
     const choices = selectLanguages()
     const correct = choices[Math.floor(Math.random() * choices.length)]
+    console.log(choices)
+    console.log(correct)
     
     try {
     const data = await (
@@ -49,6 +51,7 @@ const handler = async (interaction: CommandInteraction) => {
         )
     ).json().catch(() => interaction.reply('json').catch(console.error))
     const article: string = Object.values(data.query.pages)[0]['extract']
+    console.log(article)
 
     const message: Message = (await interaction
         .reply({
