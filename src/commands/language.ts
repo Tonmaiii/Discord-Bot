@@ -39,7 +39,6 @@ parse(
             })
         )
         languages = languages.filter(language => language.articles >= 100000)
-        console.log(languages.map(language => language.name).join(','))
     }
 )
 
