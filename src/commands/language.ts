@@ -41,13 +41,17 @@ const handler = async (interaction: CommandInteraction) => {
     const userId = interaction.user.id
     const choices = selectLanguages()
     const correct = choices[Math.floor(Math.random() * choices.length)]
-
+    
+    try {
     const data = await (
         await fetch(
             `https://${correct.wiki}.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=1&explaintext=1&generator=random&grnnamespace=0`
         )
     ).json()
     const article: string = Object.values(data.query.pages)[0]['extract']
+    catch {
+        interaction.reply('something went wrong').catch(console.error))
+    }
 
     const message: Message = (await interaction
         .reply({
