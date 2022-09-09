@@ -76,8 +76,9 @@ const handler = async (interaction: CommandInteraction) => {
         })
     })
     }
-    catch {
+    catch (e) {
         interaction.reply('something went wrong').catch(console.error)
+        console.error(e)
     }
 }
 
