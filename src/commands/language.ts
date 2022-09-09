@@ -41,10 +41,7 @@ const handler = async (interaction: CommandInteraction) => {
     const userId = interaction.user.id
     const choices = selectLanguages()
     const correct = choices[Math.floor(Math.random() * choices.length)]
-    console.log(choices)
-    console.log(correct)
     
-    try {
     const data = await (
         await fetch(
             `https://${correct.wiki}.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=1&explaintext=1&generator=random&grnnamespace=0`
@@ -77,11 +74,6 @@ const handler = async (interaction: CommandInteraction) => {
             ]
         })
     })
-    }
-    catch (e) {
-        interaction.reply('something went wrong').catch(console.error)
-        console.error(e)
-    }
 }
 
 const displayAnswers = (
@@ -143,9 +135,8 @@ const createButton = (
 
 const selectLanguages = () => {
     const selected = []
-    const unselected = languages
+    const unselected = [...languages]
     for (let i = 0; i < 4; i++) {
-        console.log(unselected)
         const index = Math.floor(Math.random() * unselected.length)
         selected.push(unselected[index])
         unselected.splice(index, 1)
