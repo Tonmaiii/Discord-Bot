@@ -6,33 +6,40 @@ import {
     MessageActionRowOptions,
     MessageButton,
     MessageButtonOptions,
-    MessageButtonStyle,
-    MessageReaction,
-    User
+    MessageButtonStyle
 } from 'discord.js'
 import { readFileSync } from 'fs'
 import { parse } from 'csv-parse'
 import fetch from 'node-fetch'
-import { MessageButtonStyles } from 'discord.js/typings/enums'
 
-let languages: {
+type language = {
     name: string
     local: string
     wiki: string
     articles: number
-}[]
+}
+
+let languages: language[]
 const languagesTable = readFileSync('./src/data/languages.tsv')
 parse(
     languagesTable,
     { delimiter: '\t', columns: true, trim: true },
     (_, data) => {
-        languages = data.map((l: { [x: string]: string }) => ({
-            name: l.Language as string,
-            local: l['Language (local)'] as string,
-            wiki: l.Wiki as string,
-            articles: parseInt(l.Articles.replace(/,/, ''))
-        }))
+        languages = data.map(
+            (l: {
+                [x: string]: string
+                Language: string
+                Wiki: string
+                Articles: string
+            }) => ({
+                name: l.Language as string,
+                local: l['Language (local)'],
+                wiki: l.Wiki,
+                articles: parseInt(l.Articles.replace(/,/g, ''))
+            })
+        )
         languages = languages.filter(language => language.articles >= 100000)
+        console.log(languages.map(language => language.name).join(','))
     }
 )
 
@@ -41,7 +48,7 @@ const handler = async (interaction: CommandInteraction) => {
     const userId = interaction.user.id
     const choices = selectLanguages()
     const correct = choices[Math.floor(Math.random() * choices.length)]
-    
+
     const data = await (
         await fetch(
             `https://${correct.wiki}.wikipedia.org/w/api.php?format=json&action=query&prop=extracts&exintro=1&explaintext=1&generator=random&grnnamespace=0`
@@ -55,7 +62,8 @@ const handler = async (interaction: CommandInteraction) => {
             components: createComponent(choices),
             fetchReply: true
         })
-        .catch(() => interaction.reply('reply').catch(console.error))) as Message
+        .catch(() => console.error)) as Message
+    if (!message) return
 
     const collector = message.createMessageComponentCollector({
         filter: (interaction: ButtonInteraction) =>
@@ -77,18 +85,8 @@ const handler = async (interaction: CommandInteraction) => {
 }
 
 const displayAnswers = (
-    choices: {
-        name: string
-        local: string
-        wiki: string
-        articles: number
-    }[],
-    correct: {
-        name: string
-        local: string
-        wiki: string
-        articles: number
-    },
+    choices: language[],
+    correct: language,
     selected: string
 ): (Required<BaseMessageComponentOptions> & MessageActionRowOptions)[] => [
     {
@@ -108,12 +106,7 @@ const displayAnswers = (
 ]
 
 const createComponent = (
-    choices: {
-        name: string
-        local: string
-        wiki: string
-        articles: number
-    }[]
+    choices: language[]
 ): (Required<BaseMessageComponentOptions> & MessageActionRowOptions)[] => [
     {
         type: 'ACTION_ROW',
