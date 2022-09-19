@@ -1,5 +1,5 @@
 import { CommandInteraction } from 'discord.js'
-import * as words from '../data/words.json
+import * as words from '../data/words.json'
 
 const handler = (interaction: CommandInteraction) => {
     const length = Math.floor(Math.random() * (10 - 3)) + 3
