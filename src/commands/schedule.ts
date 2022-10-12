@@ -4,7 +4,7 @@ import { readFileSync } from 'fs'
 const schedule = readFileSync('./src/data/schedule.txt', 'utf-8')
 
 const handler = (interaction: CommandInteraction) => {
-    interaction.reply(nonsense).catch(console.error)
+    interaction.reply(schedule).catch(console.error)
 }
 
 const info = {
