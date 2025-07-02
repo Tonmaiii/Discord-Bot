@@ -1,11 +1,11 @@
-import { Interaction } from 'discord.js'
+import { ChatInputCommandInteraction, Interaction } from 'discord.js'
 
-import commandHandler from './commandHandler'
 import buttonHandler from './buttonHandler'
+import commandHandler from './commandHandler'
 
 export default (interaction: Interaction) => {
     if (interaction.isCommand()) {
-        commandHandler(interaction)
+        commandHandler(interaction as ChatInputCommandInteraction)
         return
     }
     if (interaction.isButton()) {
