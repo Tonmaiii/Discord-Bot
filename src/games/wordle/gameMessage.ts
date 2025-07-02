@@ -1,4 +1,4 @@
-import { Message } from 'discord.js'
+import { Colors, Message } from 'discord.js'
 import Game from './game'
 
 const wordToEmoji = (word: string) => {
@@ -86,7 +86,7 @@ export default class GameMessage extends Game {
                     description: `${
                         this.guesses.length
                     }/6 \n\n${this.generateResults()}\u2800`,
-                    color: 'GREEN'
+                    color: Colors.Green
                 }
             ]
         })
@@ -102,7 +102,7 @@ export default class GameMessage extends Game {
                     }/6 \n\n${this.generateResults()}\n\nThe word was ${
                         this.word
                     }`,
-                    color: 'RED'
+                    color: Colors.Red
                 }
             ]
         })

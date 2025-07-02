@@ -1,7 +1,12 @@
-import { ButtonInteraction, Message, MessageActionRow } from 'discord.js'
+import {
+    ActionRow,
+    ButtonComponent,
+    ButtonInteraction,
+    Colors
+} from 'discord.js'
 import { games } from '../games/tictactoe.js'
 
-export default (interaction: ButtonInteraction, id: string) => {
+export default async (interaction: ButtonInteraction, id: string) => {
     if (games[interaction.message.id]) {
         const game = games[interaction.message.id]
         const pos = parseInt(id[1])
@@ -11,34 +16,38 @@ export default (interaction: ButtonInteraction, id: string) => {
             game.turn === 1 &&
             game.game.get_pos(pos) === 0
         ) {
-            game.p1_interaction(interaction, pos)
+            await game.p1_interaction(interaction, pos)
             game.turn = 2
         } else if (
             interaction.user.id === game.p2 &&
             game.turn === 2 &&
             game.game.get_pos(pos) === 0
         ) {
-            game.p2_interaction(interaction, pos)
+            await game.p2_interaction(interaction, pos)
             game.turn = 1
         }
 
         const winner = game.game.check_win()
         if (winner) {
-            const embeds = interaction.message.embeds
+            const embeds = interaction.message.embeds.map(embed =>
+                embed.toJSON()
+            )
 
             if (winner === -1) {
-                Object.assign(embeds[1], {
+                embeds[1] = {
+                    ...embeds[1],
                     title: 'Draw',
-                    color: 'PURPLE',
+                    color: Colors.Purple,
                     fields: []
-                })
+                }
             } else if (winner === 1) {
-                Object.assign(embeds[1], {
+                embeds[1] = {
+                    ...embeds[1],
                     title: 'Winner',
                     color:
                         process.env.OWNER_USER_ID === game.p1
-                            ? 'DARK_GREEN'
-                            : 'BLUE',
+                            ? Colors.DarkGreen
+                            : Colors.Blue,
                     fields: [
                         {
                             name: '⭕',
@@ -46,14 +55,15 @@ export default (interaction: ButtonInteraction, id: string) => {
                             inline: true
                         }
                     ]
-                })
+                }
             } else if (winner === 2) {
-                Object.assign(embeds[1], {
+                embeds[1] = {
+                    ...embeds[1],
                     title: 'Winner',
                     color:
                         process.env.OWNER_USER_ID === game.p2
-                            ? 'DARK_GREEN'
-                            : 'RED',
+                            ? Colors.DarkGreen
+                            : Colors.Red,
                     fields: [
                         {
                             name: '❌',
@@ -61,20 +71,21 @@ export default (interaction: ButtonInteraction, id: string) => {
                             inline: true
                         }
                     ]
-                })
+                }
             }
 
-            const components = (
-                interaction.message.components as MessageActionRow[]
-            ).map((row: MessageActionRow) => {
-                row.components.map(button => {
-                    button.disabled = true
-                    return button
-                })
-                return row
-            })
+            const components = interaction.message.components.map(
+                (row: ActionRow<ButtonComponent>) => {
+                    const newRow = row.toJSON()
+                    newRow.components = newRow.components.map(button => ({
+                        ...button,
+                        disabled: true
+                    }))
+                    return newRow
+                }
+            )
 
-            ;(interaction.message as Message)
+            interaction.message
                 ?.edit({ embeds, components })
                 .catch(console.error)
         }

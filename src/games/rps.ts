@@ -1,4 +1,4 @@
-import { ButtonInteraction, Message, MessageEmbed } from 'discord.js'
+import { APIEmbed, ButtonInteraction, Message } from 'discord.js'
 
 export const games: { [key: string]: GameMessage } = {}
 const actionMap = {
@@ -23,7 +23,7 @@ class GameMessage {
     ) {
         if (interaction.user.id === this.p1 && this.p1action === null) {
             this.p1action = action
-            const message = interaction.message as Message
+            const message = interaction.message
             if (this.p2action === null) {
                 message.embeds[0].fields[0].name = '?'
             } else {
@@ -81,16 +81,16 @@ class GameMessage {
     displayWinner(message: Message) {
         const winner = this.getWinner()
         if (winner === null) return
-        message.embeds[1] = new MessageEmbed()
+        const embeds: APIEmbed[] = message.embeds
 
         if (winner === 0) {
-            Object.assign(message.embeds[1], {
+            embeds[1] = {
                 title: `${actionMap[this.p1action]} = ${
                     actionMap[this.p2action]
                 }\nDraw`
-            })
+            }
         } else if (winner === 1) {
-            Object.assign(message.embeds[1], {
+            embeds[1] = {
                 title: `${actionMap[this.p1action]} > ${
                     actionMap[this.p2action]
                 }`,
@@ -101,9 +101,9 @@ class GameMessage {
                         inline: true
                     }
                 ]
-            })
+            }
         } else if (winner === 2) {
-            Object.assign(message.embeds[1], {
+            embeds[1] = {
                 title: `${actionMap[this.p1action]} < ${
                     actionMap[this.p2action]
                 }`,
@@ -114,8 +114,8 @@ class GameMessage {
                         inline: true
                     }
                 ]
-            })
+            }
         }
-        message.edit({ embeds: message.embeds })
+        message.edit({ embeds })
     }
 }

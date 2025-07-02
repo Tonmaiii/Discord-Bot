@@ -1,11 +1,15 @@
-import { CommandInteraction, Message } from 'discord.js'
+import {
+    ApplicationCommandOptionType,
+    ChatInputCommandInteraction
+} from 'discord.js'
 import Wordle from '../games/wordle/gameMessage'
 
-const handler = async (interaction: CommandInteraction) => {
+const handler = async (interaction: ChatInputCommandInteraction) => {
     const letters = (interaction.options.get('letters')?.value as number) || 5
-    const reply = (await interaction
-        .reply({ embeds: [{ title: 'Wordle' }], fetchReply: true })
-        .catch(console.error)) as Message
+    await interaction
+        .reply({ embeds: [{ title: 'Wordle' }] })
+        .catch(console.error)
+    const reply = await interaction.fetchReply()
     if (!reply) return
     Wordle.newGame(
         reply,
@@ -19,7 +23,7 @@ const info = {
     description: 'Play Wordle',
     options: [
         {
-            type: 'INTEGER',
+            type: ApplicationCommandOptionType.Integer,
             description: 'Number of letters',
             name: 'letters'
         }

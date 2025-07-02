@@ -1,4 +1,4 @@
-import { Message, MessageEmbedOptions, MessageReaction } from 'discord.js'
+import { APIEmbed, Colors, Message } from 'discord.js'
 import Game from './game'
 
 export default class GameMessage extends Game {
@@ -25,8 +25,7 @@ export default class GameMessage extends Game {
             this.message.react(`${i + 1}\u20E3`).catch(console.error)
         )
         const collector = this.message.createReactionCollector({
-            filter: (reaction: MessageReaction) =>
-                emojis.includes(reaction.emoji.name)
+            filter: reaction => emojis.includes(reaction.emoji.name)
         })
 
         collector.on('collect', (reaction, user) => {
@@ -76,7 +75,7 @@ export default class GameMessage extends Game {
         delete GameMessage.games[this.message.id]
     }
 
-    private createEmbed(): MessageEmbedOptions[] {
+    private createEmbed(): APIEmbed[] {
         return [
             this.createTitle(),
             this.createTurnEmbed(),
@@ -97,7 +96,7 @@ export default class GameMessage extends Game {
             .join('\n')
     }
 
-    private createTitle() {
+    private createTitle(): APIEmbed {
         return {
             title: 'Playing Connect Four',
             fields: [
@@ -120,7 +119,7 @@ export default class GameMessage extends Game {
         }
     }
 
-    private createTurnEmbed(): MessageEmbedOptions {
+    private createTurnEmbed(): APIEmbed {
         return {
             title: 'Current turn',
             fields: [
@@ -133,11 +132,11 @@ export default class GameMessage extends Game {
         }
     }
 
-    private createWinnerEmbed(player: 0 | 1 | 2): MessageEmbedOptions {
+    private createWinnerEmbed(player: 0 | 1 | 2): APIEmbed {
         if (player === 0)
             return {
                 title: 'Draw',
-                color: 'PURPLE'
+                color: Colors.Purple
             }
         else
             return {
@@ -165,10 +164,10 @@ export default class GameMessage extends Game {
 
     private getColor(player: 1 | 2) {
         return this.getId(player) === process.env.OWNER_USER_ID
-            ? 'DARK_GREEN'
+            ? Colors.DarkGreen
             : player === 1
-            ? 'RED'
-            : 'BLUE'
+            ? Colors.Red
+            : Colors.Blue
     }
 
     static newGame(message: Message, p1: string, p2: string) {

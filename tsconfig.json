@@ -5,7 +5,6 @@
         "lib": ["esnext"],
         "outDir": "./dist",
         "rootDir": "./src",
-        "watch": true,
         "resolveJsonModule": true,
         "skipLibCheck": true
     },

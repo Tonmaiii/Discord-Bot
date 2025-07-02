@@ -1,8 +1,11 @@
-import { CommandInteraction } from 'discord.js'
+import {
+    ApplicationCommandOptionType,
+    ChatInputCommandInteraction
+} from 'discord.js'
 
 import * as translation from '../data/toki_pona.json'
 
-const handler = (interaction: CommandInteraction) => {
+const handler = (interaction: ChatInputCommandInteraction) => {
     const text = interaction.options.get('text').value as string
     const words = text.split(' ')
     const translated = words
@@ -29,7 +32,7 @@ const info = {
     description: 'Translates toki pona text to english word for word',
     options: [
         {
-            type: 'STRING',
+            type: ApplicationCommandOptionType.String,
             description: 'Text to translate',
             name: 'text',
             required: true

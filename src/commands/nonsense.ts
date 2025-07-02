@@ -1,9 +1,9 @@
-import { CommandInteraction } from 'discord.js'
+import { ChatInputCommandInteraction } from 'discord.js'
 import { readFileSync } from 'fs'
 
 const nonsense = readFileSync('./src/data/nonsense.txt', 'utf-8')
 
-const handler = (interaction: CommandInteraction) => {
+const handler = (interaction: ChatInputCommandInteraction) => {
     interaction.reply(nonsense).catch(console.error)
 }
 

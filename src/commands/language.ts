@@ -1,15 +1,15 @@
+import { parse } from 'csv-parse'
 import {
-    BaseMessageComponentOptions,
+    ActionRowBuilder,
+    ButtonBuilder,
     ButtonInteraction,
-    CommandInteraction,
-    Message,
-    MessageActionRowOptions,
-    MessageButton,
-    MessageButtonOptions,
-    MessageButtonStyle
+    ButtonStyle,
+    ChatInputCommandInteraction,
+    Colors,
+    ComponentType,
+    MessageActionRowComponentBuilder
 } from 'discord.js'
 import { readFileSync } from 'fs'
-import { parse } from 'csv-parse'
 import fetch from 'node-fetch'
 
 type language = {
@@ -42,7 +42,7 @@ parse(
     }
 )
 
-const handler = async (interaction: CommandInteraction) => {
+const handler = async (interaction: ChatInputCommandInteraction) => {
     if (!languages) return
     const userId = interaction.user.id
     const choices = selectLanguages()
@@ -55,18 +55,17 @@ const handler = async (interaction: CommandInteraction) => {
     ).json()
     const article: string = Object.values(data.query.pages)[0]['extract']
 
-    const message: Message = (await interaction
+    await interaction
         .reply({
             embeds: [{ description: article }],
-            components: createComponent(choices),
-            fetchReply: true
+            components: createComponent(choices)
         })
-        .catch(() => console.error)) as Message
+        .catch(() => console.error)
+    const message = await interaction.fetchReply()
     if (!message) return
-
-    const collector = message.createMessageComponentCollector({
-        filter: (interaction: ButtonInteraction) =>
-            interaction.user.id === userId
+    const collector = interaction.channel.createMessageComponentCollector({
+        componentType: ComponentType.Button,
+        filter: interaction => interaction.user.id === userId
     })
 
     collector.once('collect', (interaction: ButtonInteraction) => {
@@ -76,7 +75,9 @@ const handler = async (interaction: CommandInteraction) => {
                 {
                     description: article,
                     color:
-                        interaction.customId === correct.wiki ? 'GREEN' : 'RED'
+                        interaction.customId === correct.wiki
+                            ? Colors.Green
+                            : Colors.Red
                 }
             ]
         })
@@ -87,42 +88,36 @@ const displayAnswers = (
     choices: language[],
     correct: language,
     selected: string
-): (Required<BaseMessageComponentOptions> & MessageActionRowOptions)[] => [
-    {
-        type: 'ACTION_ROW',
-        components: choices.map(({ name, wiki }) =>
+): ActionRowBuilder<MessageActionRowComponentBuilder>[] => [
+    new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+        choices.map(({ name, wiki }) =>
             createButton(
                 name,
                 wiki,
                 wiki === correct.wiki
-                    ? 'SUCCESS'
+                    ? ButtonStyle.Success
                     : wiki === selected
-                    ? 'DANGER'
-                    : 'SECONDARY'
+                    ? ButtonStyle.Danger
+                    : ButtonStyle.Secondary
             )
         )
-    }
+    )
 ]
 
 const createComponent = (
     choices: language[]
-): (Required<BaseMessageComponentOptions> & MessageActionRowOptions)[] => [
-    {
-        type: 'ACTION_ROW',
-        components: choices.map(({ name, wiki }) => createButton(name, wiki))
-    }
+): ActionRowBuilder<MessageActionRowComponentBuilder>[] => [
+    new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+        choices.map(({ name, wiki }) => createButton(name, wiki))
+    )
 ]
 
 const createButton = (
     label: string,
     id: string,
-    style: MessageButtonStyle = 'SECONDARY'
-) => {
-    return new MessageButton({
-        label,
-        style,
-        customId: id
-    } as MessageButtonOptions)
+    style: ButtonStyle = ButtonStyle.Secondary
+): ButtonBuilder => {
+    return new ButtonBuilder().setLabel(label).setCustomId(id).setStyle(style)
 }
 
 const selectLanguages = () => {

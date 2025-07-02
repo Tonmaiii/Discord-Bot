@@ -1,23 +1,25 @@
 import {
-    BaseMessageComponentOptions,
-    CommandInteraction,
-    Message,
-    MessageActionRow,
-    MessageActionRowOptions,
-    MessageButton
+    APIActionRowComponent,
+    APIButtonComponent,
+    APIEmbed,
+    ApplicationCommandOptionType,
+    ButtonStyle,
+    ChatInputCommandInteraction,
+    ComponentType
 } from 'discord.js'
-import { twoPlayerGame } from '../misc/createNewGame'
 import { makeNewGame } from '../games/tictactoe'
+import { twoPlayerGame } from '../misc/createNewGame'
 
-const createButton = (label: string, id: string) => {
-    return new MessageButton({
+const createButton = (label: string, id: string): APIButtonComponent => {
+    return {
+        type: ComponentType.Button,
         label,
-        style: 'SECONDARY',
-        customId: id
-    })
+        style: ButtonStyle.Secondary,
+        custom_id: id
+    }
 }
 
-const createEmbed = (p1: string, p2: string) => [
+const createEmbed = (p1: string, p2: string): APIEmbed[] => [
     {
         title: 'Playing Tic-Tac-Toe',
         fields: [
@@ -50,31 +52,34 @@ const createEmbed = (p1: string, p2: string) => [
     }
 ]
 
-const createComponent = (): MessageActionRowOptions[] => [
-    new MessageActionRow({
+const createComponent = (): APIActionRowComponent<APIButtonComponent>[] => [
+    {
+        type: ComponentType.ActionRow,
         components: [
-            createButton(' ', 'ttt.1'),
-            createButton(' ', 'ttt.2'),
-            createButton(' ', 'ttt.3')
+            createButton('\xad', 'ttt.1'),
+            createButton('\xad', 'ttt.2'),
+            createButton('\xad', 'ttt.3')
         ]
-    }),
-    new MessageActionRow({
+    },
+    {
+        type: ComponentType.ActionRow,
         components: [
-            createButton(' ', 'ttt.4'),
-            createButton(' ', 'ttt.5'),
-            createButton(' ', 'ttt.6')
+            createButton('\xad', 'ttt.4'),
+            createButton('\xad', 'ttt.5'),
+            createButton('\xad', 'ttt.6')
         ]
-    }),
-    new MessageActionRow({
+    },
+    {
+        type: ComponentType.ActionRow,
         components: [
-            createButton(' ', 'ttt.7'),
-            createButton(' ', 'ttt.8'),
-            createButton(' ', 'ttt.9')
+            createButton('\xad', 'ttt.7'),
+            createButton('\xad', 'ttt.8'),
+            createButton('\xad', 'ttt.9')
         ]
-    })
+    }
 ]
 
-const handler = async (interaction: CommandInteraction) => {
+const handler = async (interaction: ChatInputCommandInteraction) => {
     const player = interaction.user.id
     const mention = interaction.options.get('opponent')
     const opponent = mention.value as string
@@ -83,9 +88,7 @@ const handler = async (interaction: CommandInteraction) => {
         interaction,
         {
             embeds: createEmbed(player, opponent),
-            components:
-                createComponent() as (Required<BaseMessageComponentOptions> &
-                    MessageActionRowOptions)[]
+            components: createComponent()
         },
         makeNewGame
     )
@@ -96,7 +99,7 @@ const info = {
     description: 'Play Tic-Tac-Toe',
     options: [
         {
-            type: 'MENTIONABLE',
+            type: ApplicationCommandOptionType.Mentionable,
             description: 'Tag the person you want to play with',
             name: 'opponent',
             required: true

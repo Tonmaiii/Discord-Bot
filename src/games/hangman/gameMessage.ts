@@ -1,4 +1,4 @@
-import { Message } from 'discord.js'
+import { Colors, Message } from 'discord.js'
 import Game from './game'
 
 export default class GameMessage extends Game {
@@ -52,7 +52,7 @@ export default class GameMessage extends Game {
                     description: `${this.display()}\n${
                         this.displayWrongGuesses().length
                     } wrong guesses`,
-                    color: 'GREEN'
+                    color: Colors.Green
                 }
             ]
         })

@@ -1,14 +1,27 @@
+import { Client, GatewayIntentBits, Partials } from 'discord.js'
 import { config } from 'dotenv'
-import { Client, Intents } from 'discord.js'
 
 import createCommands from './handlers/createCommands'
-import handleMessage from './handlers/messageHandler'
 import handleInteraction from './handlers/interactionHandler'
+import handleMessage from './handlers/messageHandler'
 
 config()
 
-const intents = new Intents(32767)
-const client = new Client({ intents })
+const client = new Client({
+    intents: [
+        GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMessages,
+        GatewayIntentBits.GuildMessageReactions,
+        GatewayIntentBits.DirectMessages,
+        GatewayIntentBits.MessageContent
+    ],
+    partials: [
+        Partials.Message,
+        Partials.Channel,
+        Partials.User,
+        Partials.Reaction
+    ]
+})
 
 client.on('ready', () => {
     console.log('Bot is online')

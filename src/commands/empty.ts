@@ -1,6 +1,9 @@
-import { CommandInteraction } from 'discord.js'
+import {
+    ApplicationCommandOptionType,
+    ChatInputCommandInteraction
+} from 'discord.js'
 
-const handler = (interaction: CommandInteraction) => {
+const handler = (interaction: ChatInputCommandInteraction) => {
     const lines = interaction.options.get('lines')?.value as number
     interaction
         .reply('\xad\n'.repeat(0 < lines && lines <= 1000 ? lines : 10))
@@ -12,7 +15,7 @@ const info = {
     description: 'Create empty lines',
     options: [
         {
-            type: 'INTEGER',
+            type: ApplicationCommandOptionType.Integer,
             description: 'Number of lines',
             name: 'lines'
         }

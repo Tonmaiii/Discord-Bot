@@ -1,6 +1,6 @@
-import { CommandInteraction } from 'discord.js'
+import { ChatInputCommandInteraction } from 'discord.js'
 
-const handler = (interaction: CommandInteraction) => {
+const handler = (interaction: ChatInputCommandInteraction) => {
     let characters =
         'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890.,/\\;\'":<>?!@#$%^&*()_+'
 

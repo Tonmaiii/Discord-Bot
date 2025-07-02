@@ -1,8 +1,11 @@
-import { CommandInteraction } from 'discord.js'
+import {
+    ApplicationCommandOptionType,
+    ChatInputCommandInteraction
+} from 'discord.js'
 
 import * as charMap from '../data/greekify.json'
 
-const handler = (interaction: CommandInteraction) => {
+const handler = (interaction: ChatInputCommandInteraction) => {
     const text = interaction.options.get('text').value as string
 
     let result = ''
@@ -25,7 +28,7 @@ const info = {
     description: 'Greekfy an english text',
     options: [
         {
-            type: 'STRING',
+            type: ApplicationCommandOptionType.String,
             description: 'Text to greekify',
             name: 'text',
             required: true

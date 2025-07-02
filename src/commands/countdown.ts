@@ -1,6 +1,6 @@
-import { CommandInteraction } from 'discord.js'
+import { ChatInputCommandInteraction } from 'discord.js'
 
-const handler = (interaction: CommandInteraction) => {
+const handler = (interaction: ChatInputCommandInteraction) => {
     interaction.reply('https://countdown-bell.netlify.app').catch(console.error)
 }
 

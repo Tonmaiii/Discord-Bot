@@ -1,4 +1,11 @@
-import { ButtonInteraction, Message, MessageActionRow } from 'discord.js'
+import {
+    APIActionRowComponent,
+    APIButtonComponent,
+    ButtonInteraction,
+    ButtonStyle,
+    ComponentType,
+    Message
+} from 'discord.js'
 
 export const games = {}
 
@@ -14,11 +21,13 @@ class GameMessage {
         this.turn = 1
     }
 
-    p1_interaction(interaction: ButtonInteraction, pos: number) {
+    async p1_interaction(interaction: ButtonInteraction, pos: number) {
         this.game.p1play(pos)
-        const message = interaction.message as Message
+        const message = interaction.message
 
-        const components = message.components as MessageActionRow[]
+        const components = message.components.map(row =>
+            row.toJSON()
+        ) as APIActionRowComponent<APIButtonComponent>[]
         const embeds = message.embeds
 
         Object.assign(
@@ -27,8 +36,8 @@ class GameMessage {
                 label: '◯',
                 style:
                     process.env.OWNER_USER_ID === this.p1.toString()
-                        ? 'SUCCESS'
-                        : 'PRIMARY',
+                        ? ButtonStyle.Success
+                        : ButtonStyle.Primary,
                 disabled: true
             }
         )
@@ -39,24 +48,27 @@ class GameMessage {
             inline: true
         })
 
-        message.edit({ components, embeds }).catch(console.error)
+        await message.edit({ components, embeds }).catch(console.error)
     }
 
-    p2_interaction(interaction: ButtonInteraction, pos: number) {
+    async p2_interaction(interaction: ButtonInteraction, pos: number) {
         this.game.p2play(pos)
         const message = interaction.message as Message
 
-        const components = message.components as MessageActionRow[]
+        const components = message.components.map(row =>
+            row.toJSON()
+        ) as APIActionRowComponent<APIButtonComponent>[]
         const embeds = message.embeds
 
         Object.assign(
             components[((pos - 1) / 3) | 0].components[(pos - 1) % 3],
             {
-                label: '╳',
+                type: ComponentType.Button,
+                label: '◯',
                 style:
-                    process.env.OWNER_USER_ID === this.p2.toString()
-                        ? 'SUCCESS'
-                        : 'DANGER',
+                    process.env.OWNER_USER_ID === this.p1.toString()
+                        ? ButtonStyle.Success
+                        : ButtonStyle.Danger,
                 disabled: true
             }
         )
@@ -67,7 +79,7 @@ class GameMessage {
             inline: true
         })
 
-        message.edit({ components, embeds }).catch(console.error)
+        await message.edit({ components, embeds }).catch(console.error)
     }
 }
 

@@ -1,22 +1,26 @@
 import {
-    CommandInteraction,
-    MessageButton,
-    MessageActionRowOptions,
-    BaseMessageComponentOptions
+    APIActionRowComponent,
+    APIButtonComponent,
+    APIEmbed,
+    ApplicationCommandOptionType,
+    ButtonStyle,
+    ChatInputCommandInteraction,
+    ComponentType
 } from 'discord.js'
 import { twoPlayerGame } from '../misc/createNewGame'
 
 import { createNewGame } from '../games/rps'
 
-const createButton = (label: string, id: string) => {
-    return new MessageButton({
+const createButton = (label: string, id: string): APIButtonComponent => {
+    return {
+        type: ComponentType.Button,
         label,
-        style: 'SECONDARY',
-        customId: id
-    })
+        style: ButtonStyle.Secondary,
+        custom_id: id
+    }
 }
 
-const createEmbed = (p1: string, p2: string) => [
+const createEmbed = (p1: string, p2: string): APIEmbed[] => [
     {
         title: 'Rock Paper Scissors',
         fields: [
@@ -34,10 +38,9 @@ const createEmbed = (p1: string, p2: string) => [
     }
 ]
 
-const createComponent = (): (Required<BaseMessageComponentOptions> &
-    MessageActionRowOptions)[] => [
+const createComponent = (): APIActionRowComponent<APIButtonComponent>[] => [
     {
-        type: 'ACTION_ROW',
+        type: ComponentType.ActionRow,
         components: [
             createButton('✊', 'rps.rock'),
             createButton('✋', 'rps.paper'),
@@ -46,7 +49,7 @@ const createComponent = (): (Required<BaseMessageComponentOptions> &
     }
 ]
 
-const handler = async (interaction: CommandInteraction) => {
+const handler = async (interaction: ChatInputCommandInteraction) => {
     const player = interaction.user.id
     const mention = interaction.options.get('opponent')
     const opponent = mention.value as string
@@ -66,7 +69,7 @@ const info = {
     description: 'Play Rock Paper Scissors',
     options: [
         {
-            type: 'MENTIONABLE',
+            type: ApplicationCommandOptionType.Mentionable,
             description: 'Tag the person you want to play with',
             name: 'opponent',
             required: true

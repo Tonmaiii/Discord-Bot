@@ -1,11 +1,11 @@
-import { CommandInteraction, Message } from 'discord.js'
 import * as TeachableMachine from '@sashido/teachablemachine-node'
+import { ChatInputCommandInteraction, Message } from 'discord.js'
 
 const model = new TeachableMachine({
     modelUrl: 'https://teachablemachine.withgoogle.com/models/rcBmdkGbn/'
 })
 
-export const handler = async (interaction: CommandInteraction) => {
+export const handler = async (interaction: ChatInputCommandInteraction) => {
     const startTime = Date.now()
     await interaction.reply({
         content: `Waiting for you to send an image\n*This command will expire <t:${Math.round(

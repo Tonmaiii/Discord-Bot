@@ -1,11 +1,11 @@
 import {
-    CommandInteraction,
+    ChatInputCommandInteraction,
     InteractionReplyOptions,
     Message
 } from 'discord.js'
 
 export const twoPlayerGame = async (
-    interaction: CommandInteraction,
+    interaction: ChatInputCommandInteraction,
     replyOption: InteractionReplyOptions,
     gameConstructor: (message: Message, p1: string, p2: string) => any
 ) => {
@@ -35,10 +35,9 @@ export const twoPlayerGame = async (
         return
     }
 
-    const reply = (await interaction
-        .reply({ ...replyOption, fetchReply: true })
-        .catch(console.error)) as Message
+    await interaction.reply({ ...replyOption }).catch(console.error)
 
+    const reply = await interaction.fetchReply()
     if (!reply) return
     gameConstructor(reply, player, opponent)
 }
